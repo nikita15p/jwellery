@@ -7,8 +7,8 @@ export default function App(){
   return (
     <div>
       <Routes>
-        <Route path="/admin/*" element={<Admin/>} />
-        <Route path="/*" element={<Customer/>} />
+        <Route path="/jwellery/admin/*" element={<Admin/>} />
+        <Route path="/jwellery/*" element={<Customer/>} />
       </Routes>
     </div>
   )

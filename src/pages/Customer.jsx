@@ -2,7 +2,8 @@ import React, {useEffect, useState} from 'react'
 import Header from '../components/Header'
 import ProductCard from '../components/ProductCard'
 import CartPanel from '../components/CartPanel'
-import { db, createPendingOrder } from '../lib/storage'
+import { db, createPendingOrder } from '../lib/storage';
+import { resolveImage } from '../lib/utils';
 
 export default function Customer(){
   const [categories, setCategories] = useState([])
@@ -16,10 +17,10 @@ export default function Customer(){
 
   useEffect(()=>{
     setCategories(db.getCategories())
-    setProducts(db.listProducts())
+    setProducts(db.listProducts().map(resolveImage))
   },[])
 
-  function refresh(){ setProducts(db.listProducts()) }
+  // function refresh(){ setProducts(db.listProducts()) }
 
   function onAdd(p){
     // check latest stock

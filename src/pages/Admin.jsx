@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import { db, markOrderPaid } from '../lib/storage'
+import { resolveImage } from '../lib/utils'
 
 function Login({onOk}){
   const [u,setU]=useState('')
@@ -37,7 +38,13 @@ export default function Admin(){
   const [verifyProof, setVerifyProof] = useState(null)
   const [tab, setTab] = useState('products')
 
-  useEffect(()=>{ if(logged){ setProducts(db.listProducts()); setCategories(db.getCategories()); setOrders(db.listOrders()) } },[logged])
+  useEffect(()=>{
+    if(logged){
+      setProducts(db.listProducts().map(resolveImage));
+      setCategories(db.getCategories());
+      setOrders(db.listOrders())
+    }
+  },[logged])
 
   function refreshAll(){ setProducts(db.listProducts()); setOrders(db.listOrders()) }
 
@@ -97,17 +104,7 @@ export default function Admin(){
                 <div style={{display:'grid',gridTemplateColumns:'1fr 1fr 1fr',gap:12}}>
                   {products.map(p=> (
                     <div key={p.id} className="card">
-                      {
-                        (()=>{
-                          try{
-                            if(typeof p.image === 'string' && p.image.startsWith('/assets/')){
-                              return <img src={new URL('/src'+p.image, import.meta.url).href} alt="" style={{height:120,objectFit:'cover'}} onError={(e)=>{ e.target.onerror=null; e.target.src=new URL('/src/assets/placeholder.png', import.meta.url).href }} />
-                            }
-                          }catch(e){}
-                          // default
-                          return <img src={p.image} alt="" style={{height:120,objectFit:'cover'}} onError={(e)=>{ e.target.onerror=null; e.target.src=new URL('/src/assets/placeholder.png', import.meta.url).href }} />
-                        })()
-                      }
+                      <img src={p.image} alt="" style={{height:120,objectFit:'cover'}} onError={(e)=>{ e.target.onerror=null; e.target.src=new URL('/src/assets/placeholder.png', import.meta.url).href }} />
                       <h4>{p.title}</h4>
                       <div className="muted">{p.category} • ₹{p.price} • {p.count}</div>
                       <div style={{marginTop:8,display:'flex',gap:8}}>
