@@ -13,7 +13,7 @@ const seed = {
   {id: 'b1', title: 'Gold Bangle Set', category: 'Bangles', price: 1200, count: 5, image: '/assets/Bangles.png', description: 'Traditional gold-plated bangles with colored stones.'},
   {id: 'e1', title: 'Flower Earrings', category: 'Earrings', price: 250, count: 10, image: '/assets/Earrings.png', description: 'Lightweight floral earrings perfect for daily wear.'},
   {id: 'm1', title: 'Classic Mangalsutra', category: 'Mangalsutra', price: 800, count: 7, image: '/assets/Mangalsutra.png', description: 'Elegant mangalsutra with black beads and a gold pendant.'},
-  {id: 'p1', title: 'Tribal Pendant', category: 'Pendant', price: 450, count: 12, image: '/assets/Payal.png', description: 'Tribal-inspired pendant with antique finish.'}
+  {id: 'p1', title: 'Tribal Pendant', category: 'Pendant', price: 450, count: 12, image: '/assets/Pendant.png', description: 'Tribal-inspired pendant with antique finish.'}
   ,{id: 's1', title: 'Matching Set', category: 'Set', price: 2200, count: 3, image: '/assets/Set.png', description: 'Coordinated necklace and earring set for occasions.'}
   ,{id: 'a1', title: 'Delicate Anklet', category: 'Anklet', price: 199, count: 8, image: '/assets/Anklet.png', description: 'Lightweight anklet with tiny charms.'}
   ],
@@ -21,7 +21,18 @@ const seed = {
   customers: []
 }
 
-function read(){
+function memoize(fn){
+  let cache
+  const memoized = ()=>{
+    if(cache) return cache
+    cache = fn()
+    return cache
+  }
+  memoized.clear = () => cache = null
+  return memoized
+}
+
+function _read(){
   const raw = localStorage.getItem(STORAGE_KEY)
   if(!raw){
     localStorage.setItem(STORAGE_KEY, JSON.stringify(seed))
@@ -30,8 +41,11 @@ function read(){
   return JSON.parse(raw)
 }
 
+const read = memoize(_read)
+
 function write(db){
   localStorage.setItem(STORAGE_KEY, JSON.stringify(db))
+  read.clear()
 }
 
 export const db = {
@@ -147,6 +161,6 @@ export function markOrderPaid(orderId, paymentInfo){
 export function resetDB(){
   localStorage.removeItem(STORAGE_KEY)
   // read() will write seed if missing
+  read.clear()
   read()
 }
-
