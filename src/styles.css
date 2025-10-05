@@ -1,0 +1,50 @@
+:root{
+  --accent:#b8860b;
+  --muted:#666;
+}
+*{box-sizing:border-box}
+body{font-family:Inter,system-ui,Arial,Helvetica,sans-serif;margin:0;color:#222}
+
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:12px 18px;border-bottom:1px solid #eee;background:#fff}
+.brand{display:flex;align-items:center;gap:12px}
+.brand img{height:44px}
+.nav{display:flex;align-items:center;gap:18px}
+.nav a{color:#333;text-decoration:none;font-weight:600}
+.icons{display:flex;gap:12px;align-items:center}
+.search{border:1px solid #eee;padding:6px 10px;border-radius:20px}
+
+.container{padding:18px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px}
+.card{border:1px solid #eee;padding:10px;border-radius:8px;background:#fff}
+.card img{width:100%;height:160px;object-fit:cover;border-radius:6px}
+.card h4{margin:8px 0 4px}
+.muted{color:var(--muted);font-size:14px}
+
+.admin-layout{display:flex}
+.admin-sidebar{width:220px;border-right:1px solid #eee;padding:12px}
+.admin-main{flex:1;padding:12px}
+
+.form-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px}
+.form-row input, .form-row select, textarea{padding:8px;border:1px solid #ddd;border-radius:6px}
+.btn{background:var(--accent);color:white;padding:8px 12px;border-radius:6px;border:none;cursor:pointer}
+
+.btn.danger{background:#e53935;color:white;border-color:#c62828}
+
+.small{font-size:13px}
+
+.category-pill{padding:6px 10px;border-radius:20px;border:1px solid #eee;margin-right:8px;cursor:pointer}
+.category-pill.active{background:var(--accent);color:white;border-color:var(--accent)}
+
+.cart-panel{position:fixed;right:18px;bottom:18px;background:white;border:1px solid #ddd;padding:12px;border-radius:8px;box-shadow:0 10px 20px rgba(0,0,0,0.06)}
+
+.qr{width:180px;height:180px;border:1px solid #ddd;display:flex;align-items:center;justify-content:center}
+
+.req{color:#d00;margin-left:6px;font-weight:700}
+
+.admin-tabs{display:flex;gap:8px;margin-bottom:12px}
+.admin-tab{padding:8px 12px;border-radius:6px;border:1px solid #eee;cursor:pointer}
+.admin-tab.active{background:#f7f3e8;border-color:var(--accent);color:var(--accent);font-weight:700}
+
+.admin-products .card{border-color:#fdebd0}
+.admin-orders .card{border-color:#e8f3fd}
+
